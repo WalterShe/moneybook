@@ -14,40 +14,49 @@ package com.flashshe.moneybook.dataservice
 	[Event(name="error", type="flash.events.SQLEvent")]
 	
 	/**
-	 * 封装对数据库的直接操作 
+	 * 维护数据库连接，并能执行sql操作
 	 */
-	public class SQLiteDAO extends EventDispatcher
+	public class DBConnection extends EventDispatcher
 	{
-		private static var instance:SQLiteDAO;
+		private static var instance:DBConnection;
 		
 		private var conn:SQLConnection;
 		
-		public static function getInstance():SQLiteDAO
+		public static function getInstance():DBConnection
 		{
 			if (instance == null)
 			{
-				instance = new SQLiteDAO(new singleForce()); 
+				instance = new DBConnection(new singleForce()); 
 			}
 			
 			return instance;
 		}
 		
-		public function SQLiteDAO(singleforce:singleForce)
+		public function DBConnection(singleforce:singleForce)
 		{
 			if (singleforce == null)
 			{
 				throw new Error("SQLiteDAO 是一个单类");
 			}
+		}		
+		
+		/**
+		 * @private
+		 * 应用程序数据库文件
+		 */
+		private function get appDatabaseFile():File
+		{
+			var folder:File = File.applicationStorageDirectory;
+			var dbFile:File = folder.resolvePath(appDbName);
+			return dbFile;
 		}
 		
 		/**
-		 * 应用程序数据库文件
+		 * 应用程序数据库名称
 		 */
-		public function get appDatabaseFile():File
+		public function get appDbName():String
 		{
-			var folder:File = File.applicationStorageDirectory;
-			var dbFile:File = folder.resolvePath("moneybook.db");
-			return dbFile;
+			return "moneybook.db";
 		}
 		
 		/**
@@ -85,8 +94,8 @@ package com.flashshe.moneybook.dataservice
 		}
 		
 		/**
-		 * @private
-		 * 建立users表
+		 * 执行sql操作
+		 * @param sql 被执行的sql语句
 		 */
 		public function excuteSQL(sql:String):void
 		{
