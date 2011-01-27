@@ -36,20 +36,9 @@ package com.flashshe.moneybook.dataservice
 		{
 			if (singleforce == null)
 			{
-				throw new Error("SQLiteDAO 是一个单类");
+				throw new Error("DBConnection 是一个单类");
 			}
 		}		
-		
-		/**
-		 * @private
-		 * 应用程序数据库文件
-		 */
-		private function get appDatabaseFile():File
-		{
-			var folder:File = File.applicationStorageDirectory;
-			var dbFile:File = folder.resolvePath(appDbName);
-			return dbFile;
-		}
 		
 		/**
 		 * 应用程序数据库名称
@@ -60,7 +49,7 @@ package com.flashshe.moneybook.dataservice
 		}
 		
 		/**
-		 * 建立与应用程序数据库的连接
+		 * 异步的方式建立与数据库的连接
 		 */
 		public function openAppDB():void
 		{
@@ -73,7 +62,9 @@ package com.flashshe.moneybook.dataservice
 			conn.addEventListener(SQLEvent.OPEN, eventHandler);
 			conn.addEventListener(SQLEvent.CLOSE, eventHandler);
 			conn.addEventListener(SQLErrorEvent.ERROR, eventHandler);
-			conn.openAsync(appDatabaseFile);
+			var folder:File = File.applicationStorageDirectory;
+			var dbFile:File = folder.resolvePath(appDbName);
+			conn.openAsync(dbFile);
 		}
 		
 		private function eventHandler(event:Event):void
@@ -82,7 +73,7 @@ package com.flashshe.moneybook.dataservice
 		}
 		
 		/**
-		 * 关闭与应用程序数据库的连接
+		 * 关闭数据库的连接
 		 */
 		public function closeAppDB():void
 		{
