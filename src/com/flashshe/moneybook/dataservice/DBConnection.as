@@ -1,7 +1,6 @@
 package com.flashshe.moneybook.dataservice
 {
 	import flash.data.SQLConnection;
-	import flash.data.SQLStatement;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.SQLErrorEvent;
@@ -14,7 +13,7 @@ package com.flashshe.moneybook.dataservice
 	[Event(name="error", type="flash.events.SQLEvent")]
 	
 	/**
-	 * 维护数据库连接，并能执行sql操作
+	 * 维护数据库连接
 	 */
 	public class DBConnection extends EventDispatcher
 	{
@@ -41,11 +40,19 @@ package com.flashshe.moneybook.dataservice
 		}		
 		
 		/**
-		 * 应用程序数据库名称
+		 * 数据库名称
 		 */
 		public function get appDbName():String
 		{
 			return "moneybook.db";
+		}
+		
+		/**
+		 * 数据库连接
+		 */
+		public function get connection():SQLConnection
+		{
+			return conn;
 		}
 		
 		/**
@@ -82,20 +89,6 @@ package com.flashshe.moneybook.dataservice
 				conn.close();
 				conn = null;
 			}
-		}
-		
-		/**
-		 * 执行sql操作
-		 * @param sql 被执行的sql语句
-		 */
-		public function excuteSQL(sql:String):void
-		{
-			var createStmt:SQLStatement = new SQLStatement();
-			createStmt.text = sql;
-			createStmt.sqlConnection = conn;
-			createStmt.addEventListener(SQLEvent.RESULT, eventHandler); 
-			createStmt.addEventListener(SQLErrorEvent.ERROR, eventHandler);
-			createStmt.execute();
 		}
 	}
 }

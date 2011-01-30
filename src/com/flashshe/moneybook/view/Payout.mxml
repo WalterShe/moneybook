@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		title="支出" styleName="viewPadding">
+	<s:layout>
+		<s:VerticalLayout gap="15"/>
+	</s:layout>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:HGroup width="100%" verticalAlign="middle">
+		<s:Label text="金额: " width="70"/>
+		<s:TextInput id="moneyNumTxt" width="100%"/>
+	</s:HGroup>
+	
+	<s:HGroup width="100%" verticalAlign="middle">
+		<s:Label text="日期: " width="70"/>
+		<s:TextInput id="dateTxt" width="100%"/>
+	</s:HGroup>
+	
+	<s:HGroup width="100%" verticalAlign="middle">
+		<s:Label text="类别: " width="70"/>
+		<s:ComboBox id="category" width="100%"/>
+	</s:HGroup>
+	
+	<s:HGroup width="100%" horizontalAlign="center" height="100" verticalAlign="bottom">
+		<s:Button id="saveBtn" label="保存"/>
+	</s:HGroup>
+	
+</s:View>

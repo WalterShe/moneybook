@@ -1,19 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		xmlns:s="library://ns.adobe.com/flex/spark" 
-		title="Home" initialize="init()">
+		title="Home" initialize="init()" styleName="viewPadding">
 	
 	<fx:Script>
 		<![CDATA[
-			import com.flashshe.moneybook.dataservice.CreateNewUserService;
+			import com.flashshe.moneybook.app.AppInit;
+			import com.flashshe.moneybook.dataservice.GetSecondeCategoriesServiece;
+			
 			
 			private function init():void
 			{
-				var service:CreateNewUserService = new CreateNewUserService();
-				service.createNewUser("walter");
+				var appInit:AppInit = new AppInit();
+				appInit.addEventListener(AppInit.APP_INIT_COMPLETED, appInitCompleteHandler);
+				appInit.init();
 			}
+			
+			private function appInitCompleteHandler(event:Event):void
+			{
+				var service:GetSecondeCategoriesServiece = new GetSecondeCategoriesServiece();
+				service.getCategories();
+			}
+			
+			private function incomeBtnClickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+			}
+			
+			private function payoutBtnClickHandler(event:MouseEvent):void
+			{
+				navigator.pushView(Payout);
+			}
+			
 			
 		]]>
 	</fx:Script>
+	
+	<s:Button id="incomeBtn" x="20" label="收入" click="incomeBtnClickHandler(event)"/>
+	
+	<s:Button id="payoutBtn" x="200" label="支出" click="payoutBtnClickHandler(event)"/>
 	
 </s:View>

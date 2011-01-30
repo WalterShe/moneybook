@@ -5,15 +5,17 @@ package com.flashshe.moneybook.dataservice
 	import flash.filesystem.File;
 	
 	/**
-	 * 应用程序初始化完成后派发该事件
+	 * 应用程序数据库初始化完成后派发该事件
 	 */
-	[Event(name="initCompleted", type="flash.events.Event")]
+	[Event(name="databaseInitCompleted", type="flash.events.Event")]
 	
 	/**
-	 * 负责初始化应用程序
+	 * 负责初始化应用程序数据库
 	 */
 	public class AppDatabaseInit extends EventDispatcher
 	{
+		public static const INIT_COMPLETED:String = "databaseInitCompleted";
+		
 		private var dbConn:DBConnection;
 		
 		public function AppDatabaseInit()
@@ -23,7 +25,7 @@ package com.flashshe.moneybook.dataservice
 		}
 		
 		/**
-		 * <code>true</code>表示应用程序已经初始化，否则表示没有
+		 * <code>true</code>表示应用程序数据库已经初始化，否则表示没有
 		 */
 		public function get initialized():Boolean
 		{						
@@ -34,7 +36,7 @@ package com.flashshe.moneybook.dataservice
 		}		
 		
 		/**
-		 * 执行应用程序初始化
+		 * 执行数据库初始化
 		 */
 		public function init():void
 		{
@@ -47,9 +49,9 @@ package com.flashshe.moneybook.dataservice
 				var dbFile:File = appStoragefolder.resolvePath(dbConn.appDbName);
 				
 				dbTempleteFile.copyTo(dbFile, true);
-				
-				dispatchEvent(new Event("initCompleted"));
 			}
+			
+			dispatchEvent(new Event(INIT_COMPLETED));
 		}
 	}
 }
