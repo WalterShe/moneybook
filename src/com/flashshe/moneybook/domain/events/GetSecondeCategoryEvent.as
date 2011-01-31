@@ -41,7 +41,7 @@ package com.flashshe.moneybook.domain.events
 		/**
 		 * 克隆一个<code>GetSecondeCategoryEvent</code>实例
 		 */
-		public function clone():GetSecondeCategoryEvent
+		public override function clone():Event
 		{
 			return new GetSecondeCategoryEvent(categories, isPayout, bubbles, cancelable);
 		}
